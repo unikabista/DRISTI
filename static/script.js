@@ -112,7 +112,7 @@ function speakText(text) {
   window.speechSynthesis.cancel();
 
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'en-US';
+  utterance.lang = currentLanguage;
   utterance.pitch = 1;
   utterance.rate = 1;
   utterance.volume = 1;
@@ -144,7 +144,7 @@ function capturePhoto() {
       if (data.caption) {
         const finalCaption = '📝 ' + data.caption;
         captionDisplay.innerText = finalCaption;
-        // Use the language returned from the backend /capture endpoint for speaking
+        if (data.lang_code) currentLanguage = data.lang_code;
         setTimeout(() => speakText(data.caption), 200);
       } else {
         captionDisplay.innerText = '❌ Failed to get caption.';
@@ -193,7 +193,7 @@ if (SpeechRecognition) {
   recognition = new SpeechRecognition();
   recognition.continuous = true;
   recognition.interimResults = false;
-  recognition.lang = 'en-US';  // Set to English only
+  recognition.lang = '';  // Empty = browser auto-detects language
 
   recognition.onresult = (event) => {
     const command = event.results[event.results.length - 1][0].transcript.trim();
@@ -209,8 +209,13 @@ if (SpeechRecognition) {
     .then(data => {
       console.log('Backend response:', data);
 
+      // Update language from backend detection
+      if (data.lang_code) {
+        currentLanguage = data.lang_code;
+        recognition.lang = data.lang_code;
+      }
+
       if (data.status === 'success' && data.action) {
-        // Handle the action based on the detected command
         switch(data.action) {
           case 'capture':
             capturePhoto();
@@ -226,7 +231,6 @@ if (SpeechRecognition) {
         }
       } else {
         console.log('Unrecognized command or error:', data.status);
-        speakText("Sorry, I didn't understand that command.");
       }
     })
     .catch(error => {

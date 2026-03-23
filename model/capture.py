@@ -1,4 +1,4 @@
-import cv2
+git switch -c <branch-name>import cv2
 import time
 
 def capture_image(filename="captured.jpg"):

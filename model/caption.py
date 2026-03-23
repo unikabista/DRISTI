@@ -35,25 +35,26 @@ def extract_text(image):
     text = pytesseract.image_to_string(gray)
     return text.strip()
 
-def get_image_description(base64_image):
+def get_image_description(base64_image, language="English"):
     """Get image description from GPT-4o using Eden AI API"""
     headers = {
         "Authorization": f"Bearer {EDEN_AI_API_KEY}",
         "Content-Type": "application/json"
     }
-    
+
     # Prepare the prompt for image description
-    prompt = """Describe this scene naturally, as if you're telling a friend what you're looking at. 
+    prompt = f"""Describe this scene naturally in {language}, as if you're telling a friend what you're looking at.
     Focus on what would be most helpful for a blind person:
     - If people are present, describe their gender, approximate age, and what they're doing
     - What objects and people are present
     - The colors and visual elements
     - How things are arranged in the space
     - Any text that might be important
-    
+
     Keep it conversational and natural, avoiding phrases like 'the image shows' or 'I can see'.
     Be descriptive but concise. Focus on concrete details rather than subjective atmosphere descriptions.
-    When describing people, be specific about their gender, age group, and actions."""
+    When describing people, be specific about their gender, age group, and actions.
+    Respond entirely in {language}."""
     
     payload = {
         "model": "openai/gpt-4o",
@@ -93,24 +94,24 @@ def get_image_description(base64_image):
         print(f"Error calling Eden AI API: {e}")
         return "Sorry, there was an error processing the image."
 
-def describe_image(image_path):
+def describe_image(image_path, language="English"):
     """Describe image using GPT-4o and extract text using OCR"""
     try:
         # Read image for OCR
         cv_image = cv2.imread(image_path)
-        
+
         # Extract text using OCR
         text = extract_text(cv_image)
-        
+
         # Convert image to base64 for GPT-4o
         with open(image_path, "rb") as image_file:
             base64_image = base64.b64encode(image_file.read()).decode('utf-8')
-        
+
         # Get description from GPT-4o
-        description = get_image_description(base64_image)
-        
+        description = get_image_description(base64_image, language=language)
+
         # Only add text information if text was actually found
-        if text and text.strip():  # Check if text exists and is not just whitespace
+        if text and text.strip():
             return f"{description} The text in the image reads: {text}"
         return description
         
