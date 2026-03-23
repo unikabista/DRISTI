@@ -137,6 +137,39 @@ Open `index.html` in browser or run via local server.
 
 ---
 
+## 🌿 Git Workflow (PowerShell)
+
+Use these commands to create a branch, commit, and push changes.
+
+### Create and switch to a new branch
+
+```powershell
+git checkout -b unika
+```
+
+or
+
+```powershell
+git switch -c unika
+```
+
+Note: do not use angle brackets in PowerShell. Use `unika`, not `<unika>`.
+
+### Commit your changes
+
+```powershell
+git add .
+git commit -m "some minor changes"
+```
+
+### Push branch to GitHub
+
+```powershell
+git push -u origin unika
+```
+
+---
+
 ## 🔐 Environment Variables
 
 Create a `.env` file:
@@ -175,7 +208,7 @@ Dristi is designed to:
 Computer Science | AI & Accessibility Research
 University of Louisiana Monroe
 
-LinkedIn: []
+LinkedIn: https://www.linkedin.com/in/unika-bista-50139033a/
 
 ---
 
