@@ -164,16 +164,17 @@ Dristi is designed to:
 
 * 3rd Place – Nexus Technology Cup 2025 (Statewide Competition)
 * Featured in university innovation showcase
+* Ulm Hackathon 2025 2nd place
 
 ---
 
 ## 👩‍💻 Author
 
-**Divya Shah**
+**Unika Bista**
 Computer Science | AI & Accessibility Research
 University of Louisiana Monroe
 
-LinkedIn: [https://www.linkedin.com/in/divya-shah27](https://www.linkedin.com/in/divya-shah27)
+LinkedIn: [https://www.linkedin.com/in/unika-bista-50139033a/](https://www.linkedin.com/in/unika-bista-50139033a/)
 
 ---
 
